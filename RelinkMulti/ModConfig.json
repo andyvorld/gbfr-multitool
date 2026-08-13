@@ -1,0 +1,26 @@
+{
+  "ModId": "RelinkMulti",
+  "ModName": "My Cool Reloaded Mod",
+  "ModAuthor": "Me",
+  "ModVersion": "1.0.0",
+  "ModDescription": "Description",
+  "ModDll": "RelinkMulti.dll",
+  "ModIcon": "Preview.png",
+  "ModR2RManagedDll32": "x86/RelinkMulti.dll",
+  "ModR2RManagedDll64": "x64/RelinkMulti.dll",
+  "ModNativeDll32": "",
+  "ModNativeDll64": "",
+  "IsLibrary": false,
+  "ReleaseMetadataFileName": "RelinkMulti.ReleaseMetadata.json",
+  "PluginData": {},
+  "IsUniversalMod": false,
+  "ModDependencies": [
+    "reloaded.sharedlib.hooks",
+    "gbfrelink.utility.manager"
+  ],
+  "OptionalDependencies": [],
+  "SupportedAppId": [
+    "granblue_fantasy_relink.exe"
+  ],
+  "ProjectUrl": ""
+}
