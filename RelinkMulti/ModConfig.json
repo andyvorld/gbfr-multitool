@@ -1,9 +1,9 @@
 {
-  "ModId": "RelinkMulti",
-  "ModName": "My Cool Reloaded Mod",
-  "ModAuthor": "Me",
+  "ModId": "gbfr.multitool",
+  "ModName": "Relink Multitool",
+  "ModAuthor": "andyvorld",
   "ModVersion": "1.0.0",
-  "ModDescription": "Description",
+  "ModDescription": "Collection of .tbl mods for GBFR",
   "ModDll": "RelinkMulti.dll",
   "ModIcon": "Preview.png",
   "ModR2RManagedDll32": "x86/RelinkMulti.dll",

@@ -1,3 +1,9 @@
 <Solution>
+  <Folder Name="/GBFRDataTools/">
+    <Project Path="GBFRDataTools/GBFRDataTools.Database.Generator.Core/GBFRDataTools.Database.Generator.Core.csproj" />
+    <Project Path="GBFRDataTools/GBFRDataTools.Database.Generator/GBFRDataTools.Database.Generator.csproj" />
+    <Project Path="GBFRDataTools/GBFRDataTools.Hashing/GBFRDataTools.Hashing.csproj" />
+  </Folder>
+  <Project Path="HashHunter/HashHunter.csproj" />
   <Project Path="RelinkMulti/RelinkMulti.csproj" />
 </Solution>

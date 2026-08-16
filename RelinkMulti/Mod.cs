@@ -3,8 +3,7 @@ using Reloaded.Mod.Interfaces;
 using RelinkMulti.Template;
 using RelinkMulti.Configuration;
 using gbfrelink.utility.manager.Interfaces;
-using Syroot.BinaryData;
-using GBFRDataTools.DB.Generated;
+using GBFRDataTools.Database.Generated;
 
 #if DEBUG
 using System.Diagnostics;
@@ -67,34 +66,84 @@ public class Mod : ModBase // <= Do not Remove.
 
         // If you want to implement e.g. unload support in your mod,
         // and some other neat features, override the methods in ModBase.
-        
+
         _logger.WriteLine($"[{_modConfig.ModId}] Initializing...");
         IDataManager dm;
         var ret = _modLoader.GetController<IDataManager>()!.TryGetTarget(out dm!);
         if (ret != false)
         {
-            string CONST_TABLE = "system/table/constant.tbl";
-            if (dm.FileExists(CONST_TABLE, includeExternal: false))
+            dm.UpdateTable<Constant>(constantTable =>
             {
-                var file = dm.GetModdedOrAchiveFile(CONST_TABLE);
+                foreach (var row in constantTable.Rows)
+                {
+                    row.MaxLevelVoucherReward = _configuration.ConstantTableConfig.MaxLevelVoucherReward;
+                    row.MaxLevelMSPReward = _configuration.ConstantTableConfig.MaxLevelMspReward;
+                    row.MaxLevelRepeatXP = _configuration.ConstantTableConfig.MaxLevelRepeatXP;
+                    // row.MaxTransmarvelStock = _configuration.ConstantTableConfig.MaxTransmarvelStock;
+                    row.Unk21 = _configuration.ConstantTableConfig.MaxLevelTransmarvelReward;
+                }
+            }, _configuration.ConstantTableConfig.Enabled);
 
-                var constantDb = new Constant(file);
+            dm.UpdateTable<RewardLot>(rewardLotTable =>
+            {
+                foreach (var row in rewardLotTable.Rows)
+                {
+                    if (row is { ItemId: not UtilityExtensions.EMPTY_HASH })
+                    {
+                        row.AmountGiven = (int)(row.AmountGiven * _configuration.RewardLotTableConfig.ItemDropMult);
+                    }
 
-                var _old = constantDb.Rows[0].MaxLevelRepeatXP;
-                var _new = _old / 10;
+                    if (row is { GemId: not UtilityExtensions.EMPTY_HASH })
+                    {
+                        row.GemCount = (int)(row.GemCount * _configuration.RewardLotTableConfig.SigilDropMult);
+                    }
+                }
+            }, _configuration.RewardLotTableConfig.Enabled);
 
-                _logger.WriteLine($"[{nameof(ConstantTableRow.MaxLevelRepeatXP)}] {_old} -> {_new}");
+            dm.UpdateTable<Trade>(tradeTable =>
+            {
+                foreach (var row in tradeTable.Rows)
+                {
+                    if (_configuration.TradeConfig.UnlimitedStock)
+                    {
+                        row.IsRefreshable = 0;
+                        row.MaxStockForRefresh = 0;
+                        row.AmountRefreshed = 0;
+                        row.MaxStock = -1;
+                    }
 
-                constantDb.Rows[0].MaxLevelRepeatXP = (int)_new;
+                    if (_configuration.TradeConfig.WarpathIsAwakeningPlus && WarpathPatch.PatchDict.TryGetValue(row.GemPurchasable, out var replacement))
+                    {
+                        row.GemPurchasable = replacement!;
+                    }
+                }
+            }, _configuration.TradeConfig.Enabled);
 
-                using var ms = new MemoryStream();
-                using var bs = new BinaryStream(ms);
-                constantDb.Write(bs);
+            dm.UpdateTable<ItemMaterialList>(mtl =>
+            {
+                foreach (var row in mtl.Rows)
+                {
+                    // Azurite shared to splendor key
+                    if (row.Key == 900000)
+                    {
+                        row.ItemCount1 = _configuration.TradeConfig.AzuriteShardPerSplendor;
+                    }
 
-                // Add/Update game file
-                dm.AddOrUpdateExternalFile(CONST_TABLE, ms.GetBuffer());
+                    if (_configuration.TradeConfig.DaliaIsRafaleCoin && (row.Item1 == KnownHashes.SilverDaliaBadge || row.Item1 == KnownHashes.GoldDaliaBadge))
+                    {
+                        row.Item1 = KnownHashes.RafaleCoin;
+                    }
+                }
+            }, _configuration.TradeConfig.Enabled);
 
-            }
+            dm.UpdateTable<EnemyExp>(ee =>
+            {
+                foreach (var row in ee.Rows)
+                {
+                    row.ExpOnKill = (uint)(row.ExpOnKill * _configuration.EnemyConfig.ExpMult);
+                    row.Unk6 = (uint)(row.Unk6 * _configuration.EnemyConfig.MspMult); // MSP on  Kill
+                }
+            }, _configuration.EnemyConfig.Enabled);
         }
 
         // Apply changes to the game's data.i.

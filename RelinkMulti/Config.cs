@@ -1,9 +1,104 @@
 ﻿using System.ComponentModel;
 using RelinkMulti.Template.Configuration;
-using Reloaded.Mod.Interfaces.Structs;
-using System.ComponentModel.DataAnnotations;
 
 namespace RelinkMulti.Configuration;
+
+[DisplayName("Constant Table")]
+public class ConstantTableConfig
+{
+    [Description("Enable constant table mods")]
+    [DefaultValue(false)]
+    public bool Enabled { get; set; } = false;
+
+    [DisplayName("Max Level voucher reward")]
+    [Description("Number of voucher reward given at max level")]
+    [DefaultValue(3)]
+    public int MaxLevelVoucherReward { get; set; } = 3;
+
+    [DisplayName("Max Level MSP reward")]
+    [Description("Number of MSP reward given at max level")]
+    [DefaultValue(100)]
+    public int MaxLevelMspReward { get; set; } = 100;
+
+    [DisplayName("Max Level repeat EXP")]
+    [Description("EXP required to gain rewards at max level")]
+    [DefaultValue(400000)]
+    public int MaxLevelRepeatXP { get; set; } = 400000;
+
+    // [DisplayName("Max transmarvel voucher stock")]
+    // [Description("Max number of transmarvel voucher that can be held")]
+    // [DefaultValue(999)]
+    // public uint MaxTransmarvelStock { get; set; } = 999;
+
+    [DisplayName("Max Level transmarvel voucher")]
+    [Description("Number of transmarvel voucher reward given at max level")]
+    [DefaultValue(1)]
+    public int MaxLevelTransmarvelReward { get; set; } = 1;
+}
+
+[DisplayName("Reward Lot")]
+public class RewardLotTableConfig
+{
+    [Description("Enable reward lot table mods")]
+    [DefaultValue(false)]
+    public bool Enabled { get; set; } = false;
+
+    [DisplayName("Item drop multiplier")]
+    [Description("Item drop multiplier")]
+    [DefaultValue(1)]
+    public double ItemDropMult { get; set; } = 1;
+
+    [DisplayName("Sigil drop multiplier")]
+    [Description("Sigil drop multiplier")]
+    [DefaultValue(1)]
+    public double SigilDropMult { get; set; } = 1;
+}
+
+[DisplayName("Knickknack Shack")]
+public class TradeConfig
+{
+    [Description("Enable Knickknack Shack shop mods")]
+    [DefaultValue(false)]
+    public bool Enabled { get; set; } = false;
+
+    [DisplayName("Replace warpath with Awakening+")]
+    [Description("Replace warpath with Awakening+ in Seiro's Knickknack Shack")]
+    [DefaultValue(false)]
+    public bool WarpathIsAwakeningPlus { get; set; } = false;
+
+    [DisplayName("Unlimited stock")]
+    [Description("Remove stock cap on all items in shop")]
+    [DefaultValue(false)]
+    public bool UnlimitedStock { get; set; } = false;
+
+    [DisplayName("Azurite shards per splendor")]
+    [Description("Change trade ratio of azurite shards per azurite splendor")]
+    [DefaultValue(30)]
+    public int AzuriteShardPerSplendor { get; set; } = 30;
+
+    [DisplayName("Dalia Badge is Rafale Coin")]
+    [Description("Replace Silver/Gold Dalia Badge costs with Rafale")]
+    [DefaultValue(false)]
+    public bool DaliaIsRafaleCoin { get; set; } = false;
+}
+
+[DisplayName("Enemy")]
+public class EnemyConfig
+{
+    [Description("Enable enemy mods")]
+    [DefaultValue(false)]
+    public bool Enabled { get; set; } = false;
+
+    [DisplayName("EXP Multiplier")]
+    [Description("Change the EXP on kill by a multiplier")]
+    [DefaultValue(1)]
+    public double ExpMult { get; set; } = 1;
+
+    [DisplayName("MSP Multiplier")]
+    [Description("Change the MSP on kill by a multiplier")]
+    [DefaultValue(1)]
+    public double MspMult { get; set; } = 1;
+}
 
 public class Config : Configurable<Config>
 {
@@ -27,96 +122,13 @@ public class Config : Configurable<Config>
         The `DefaultValue` attribute is used as part of the `Reset` button in Reloaded-Launcher.
     */
 
-    [DisplayName("String")]
-    [Description("This is a string.")]
-    [DefaultValue("Default Name")]
-    public string String { get; set; } = "Default Name";
+    public ConstantTableConfig ConstantTableConfig { get; set; } = new();
 
-    [DisplayName("Int")]
-    [Description("This is an int.")]
-    [DefaultValue(42)]
-    public int Integer { get; set; } = 42;
+    public RewardLotTableConfig RewardLotTableConfig { get; set; } = new();
 
-    [DisplayName("Bool")]
-    [Description("This is a bool.")]
-    [DefaultValue(true)]
-    public bool Boolean { get; set; } = true;
+    public TradeConfig TradeConfig { get; set; } = new();
 
-    [DisplayName("Float")]
-    [Description("This is a floating point number.")]
-    [DefaultValue(6.987654F)]
-    public float Float { get; set; } = 6.987654F;
-
-    [DisplayName("Enum")]
-    [Description("This is an enumerable.")]
-    [DefaultValue(SampleEnum.ILoveIt)]
-    public SampleEnum Reloaded { get; set; } = SampleEnum.ILoveIt;
-
-    public enum SampleEnum
-    {
-        [Display(Name = "No Opinion 🤷")]
-        NoOpinion,
-        [Display(Name = "It's Sucks! 👎")]
-        Sucks,
-        [Display(Name = "It's mediocre 😐")]
-        IsMediocre,
-        [Display(Name = "It's okay! 👍")]
-        IsOk,
-        [Display(Name = "It's cool! 😎")]
-        IsCool,
-        [Display(Name = "I Love It!!! ❤️🔥")]
-        ILoveIt,
-    }
-    
-    [DisplayName("Int Slider")]
-    [Description("This is a int that uses a slider control similar to a volume control slider.")]
-    [DefaultValue(100)]
-    [SliderControlParams(
-        minimum: 0.0,
-        maximum: 100.0,
-        smallChange: 1.0,
-        largeChange: 10.0,
-        tickFrequency: 10,
-        isSnapToTickEnabled: false,
-        tickPlacement:SliderControlTickPlacement.BottomRight,
-        showTextField: true,
-        isTextFieldEditable: true,
-        textValidationRegex: "\\d{1-3}")]
-    public int IntSlider { get; set; } = 100;
-
-    [DisplayName("Double Slider")]
-    [Description("This is a double that uses a slider control without any frills.")]
-    [DefaultValue(0.5)]
-    [SliderControlParams(minimum: 0.0, maximum: 1.0)]
-    public double DoubleSlider { get; set; } = 0.5;
-
-    [DisplayName("File Picker")]
-    [Description("This is a sample file picker.")]
-    [DefaultValue("")]
-    [FilePickerParams(title:"Choose a File to load from")]
-    public string File { get; set; } = "";
-
-    [DisplayName("Folder Picker")]
-    [Description("Opens a file picker but locked to only allow folder selections.")]
-    [DefaultValue("")]
-    [FolderPickerParams(
-        initialFolderPath: Environment.SpecialFolder.Desktop,
-        userCanEditPathText: false,
-        title: "Custom Folder Select",
-        okButtonLabel: "Choose Folder",
-        fileNameLabel: "ModFolder",
-        multiSelect: true,
-        forceFileSystem: true)]
-    public string Folder { get; set; } = "";
-
-    [Display(Order = 0)]
-    public int OrderFirst { get; set; }
-
-    [Display(Order = 1)]
-    public int OrderSecond { get; set; }
-
-    [Display(Order = 2)]
-    public int OrderThird { get; set; }
+    public EnemyConfig EnemyConfig { get; set; } = new();
 }
 
 /// <summary>
