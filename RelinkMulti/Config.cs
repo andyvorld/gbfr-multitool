@@ -9,31 +9,37 @@ public class ConstantTableConfig
 {
     [Description("Enable constant table mods")]
     [DefaultValue(false)]
+    [Display(Order = 0)]
     public bool Enabled { get; set; } = false;
 
     [DisplayName("Max Level voucher reward")]
     [Description("Number of voucher reward given at max level")]
     [DefaultValue(3)]
+    [Display(Order = 1)]
     public int MaxLevelVoucherReward { get; set; } = 3;
 
     [DisplayName("Max Level MSP reward")]
     [Description("Number of MSP reward given at max level")]
     [DefaultValue(100)]
+    [Display(Order = 2)]
     public int MaxLevelMspReward { get; set; } = 100;
 
     [DisplayName("Max Level repeat EXP")]
     [Description("EXP required to gain rewards at max level")]
     [DefaultValue(400000)]
+    [Display(Order = 3)]
     public int MaxLevelRepeatXP { get; set; } = 400000;
 
     // [DisplayName("Max transmarvel voucher stock")]
     // [Description("Max number of transmarvel voucher that can be held")]
     // [DefaultValue(999)]
+    // [Display(Order = 4)]
     // public uint MaxTransmarvelStock { get; set; } = 999;
 
     [DisplayName("Max Level transmarvel voucher")]
     [Description("Number of transmarvel voucher reward given at max level")]
     [DefaultValue(1)]
+    [Display(Order = 5)]
     public int MaxLevelTransmarvelReward { get; set; } = 1;
 }
 
@@ -69,6 +75,7 @@ public class TradeConfig
 {
     [Description("Enable Knickknack Shack shop mods")]
     [DefaultValue(false)]
+    [Display(Order = 0)]
     public bool Enabled { get; set; } = false;
 
     [DisplayName("Replace warpath with Awakening+")]
@@ -97,6 +104,7 @@ public class EnemyConfig
 {
     [Description("Enable enemy mods")]
     [DefaultValue(false)]
+    [Display(Order = 0)]
     public bool Enabled { get; set; } = false;
 
     [DisplayName("EXP Multiplier")]
