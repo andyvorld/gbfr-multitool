@@ -10,7 +10,7 @@
     <OutputPath>$(RELOADEDIIMODS)/RelinkMulti</OutputPath>
     <ImplicitUsings>enable</ImplicitUsings>
     <ReportAnalyzerOnlyFromSource>true</ReportAnalyzerOnlyFromSource>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
 
     <!-- IL Trimming Support for Framework Dependent Apps. Unofficial.
          If you set this to true, trimming will be enabled when you publish the mod.
