@@ -94,7 +94,7 @@ public class TradeConfig
     public int AzuriteShardPerSplendor { get; set; } = 30;
 
     [DisplayName("Dalia Badge is Rafale Coin")]
-    [Description("Replace Silver/Gold Dalia Badge costs with Rafale")]
+    [Description("Replace Silver/Gold Dalia Badge costs with Rafale coins")]
     [DefaultValue(false)]
     public bool DaliaIsRafaleCoin { get; set; } = false;
 
