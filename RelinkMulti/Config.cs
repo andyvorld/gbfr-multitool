@@ -97,6 +97,16 @@ public class TradeConfig
     [Description("Replace Silver/Gold Dalia Badge costs with Rafale")]
     [DefaultValue(false)]
     public bool DaliaIsRafaleCoin { get; set; } = false;
+
+    [DisplayName("Remove quest pre-req on shop")]
+    [Description("This is not balanced at all, some debug shop entries get revealed with this option")]
+    [DefaultValue(false)]
+    public bool NoQuestPrereq { get; set; } = false;
+
+    [DisplayName("No shop rotation")]
+    [Description("Reveals all rotating shop options permanently")]
+    [DefaultValue(false)]
+    public bool NoShopRotation { get; set; } = false;
 }
 
 [DisplayName("Enemy")]

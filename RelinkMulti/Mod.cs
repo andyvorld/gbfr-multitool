@@ -125,6 +125,18 @@ public class Mod : ModBase // <= Do not Remove.
                     {
                         row.GemPurchasable = replacement!;
                     }
+
+                    if (_configuration.TradeConfig.NoQuestPrereq)
+                    {
+                        row.MinQuestId = "00000000";
+                        row.MaxQuestId = "00000000";
+                    }
+
+                    if (_configuration.TradeConfig.NoShopRotation)
+                    {
+                        row.FeaturedWeight = 0;
+                        row.IsRandomFeatured = 0;
+                    }
                 }
             }, _configuration.TradeConfig.Enabled);
 
