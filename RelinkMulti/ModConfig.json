@@ -2,7 +2,7 @@
   "ModId": "gbfr.multitool",
   "ModName": "Relink Multitool",
   "ModAuthor": "andyvorld",
-  "ModVersion": "1.0.0",
+  "ModVersion": "1.1.0",
   "ModDescription": "Collection of .tbl mods for GBFR",
   "ModDll": "RelinkMulti.dll",
   "ModIcon": "Preview.png",
