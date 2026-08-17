@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using RelinkMulti.Template.Configuration;
 
 namespace RelinkMulti.Configuration;
@@ -41,17 +42,26 @@ public class RewardLotTableConfig
 {
     [Description("Enable reward lot table mods")]
     [DefaultValue(false)]
+    [Display(Order = 0)]
     public bool Enabled { get; set; } = false;
 
     [DisplayName("Item drop multiplier")]
     [Description("Item drop multiplier")]
     [DefaultValue(1)]
+    [Display(Order = 1)]
     public double ItemDropMult { get; set; } = 1;
 
     [DisplayName("Sigil drop multiplier")]
     [Description("Sigil drop multiplier")]
     [DefaultValue(1)]
+    [Display(Order = 2)]
     public double SigilDropMult { get; set; } = 1;
+
+    [DisplayName("⚠️ Summon drop multiplier")]
+    [Description("[Experimental] Summon drop multiplier")]
+    [DefaultValue(1)]
+    [Display(Order = 3)]
+    public double SummonDropMult { get; set; } = 1;
 }
 
 [DisplayName("Knickknack Shack")]
@@ -121,6 +131,12 @@ public class Config : Configurable<Config>
 
         The `DefaultValue` attribute is used as part of the `Reset` button in Reloaded-Launcher.
     */
+
+    [DisplayName("Enable experimental settings")]
+    [Description("Enable experimental settings")]
+    [DefaultValue(false)]
+    [Display(Order = 0)]
+    public bool EnableExperimental { get; set; } = false;
 
     public ConstantTableConfig ConstantTableConfig { get; set; } = new();
 

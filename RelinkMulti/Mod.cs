@@ -100,6 +100,15 @@ public class Mod : ModBase // <= Do not Remove.
                 }
             }, _configuration.RewardLotTableConfig.Enabled);
 
+            dm.UpdateTable<RewardSummon>(rs =>
+            {
+                foreach (var row in rs.Rows)
+                {
+                    row.Unk4 = (int)(row.Unk4 * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Min reward count
+                    row.Unk5 = (int)(row.Unk5 * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Max reward count
+                }
+            }, _configuration.RewardLotTableConfig.Enabled && _configuration.EnableExperimental);
+
             dm.UpdateTable<Trade>(tradeTable =>
             {
                 foreach (var row in tradeTable.Rows)
@@ -141,7 +150,7 @@ public class Mod : ModBase // <= Do not Remove.
                 foreach (var row in ee.Rows)
                 {
                     row.ExpOnKill = (uint)(row.ExpOnKill * _configuration.EnemyConfig.ExpMult);
-                    row.Unk6 = (uint)(row.Unk6 * _configuration.EnemyConfig.MspMult); // MSP on  Kill
+                    row.Unk6 = (uint)(row.Unk6 * _configuration.EnemyConfig.MspMult); // MSP on Kill
                 }
             }, _configuration.EnemyConfig.Enabled);
         }
