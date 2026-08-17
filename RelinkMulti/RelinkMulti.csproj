@@ -10,6 +10,7 @@
     <OutputPath>$(RELOADEDIIMODS)/RelinkMulti</OutputPath>
     <ImplicitUsings>enable</ImplicitUsings>
     <ReportAnalyzerOnlyFromSource>true</ReportAnalyzerOnlyFromSource>
+    <Version>1.0.0</Version>
 
     <!-- IL Trimming Support for Framework Dependent Apps. Unofficial.
          If you set this to true, trimming will be enabled when you publish the mod.
@@ -22,6 +23,14 @@
     <!-- Add assemblies to be trimmed. You might need to add their dependencies too!  -->
     <!-- <ReloadedLinkAssemblies Include="Reloaded.Memory" /> -->
   </ItemGroup>
+
+  <Target Name="ZipOutput" AfterTargets="Publish">
+    <PropertyGroup>
+      <ZipOutputFile>$(PublishDir)..\gbfrelink.multitool_$(Version).zip</ZipOutputFile>
+    </PropertyGroup>
+
+    <ZipDirectory SourceDirectory="$(PublishDir)" DestinationFile="$(ZipOutputFile)" Overwrite="true" />
+  </Target>
 
   <Import Project="Reloaded.Trimming.targets" />
   <Import Project="Reloaded.Checks.targets" />
