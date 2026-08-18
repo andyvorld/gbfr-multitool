@@ -167,6 +167,15 @@ public class Mod : ModBase // <= Do not Remove.
                     row.Unk6 = (uint)(row.Unk6 * _configuration.EnemyConfig.MspMult); // MSP on Kill
                 }
             }
+
+            if (_configuration.GemConfig.AllowAllSigilSynth)
+            {
+                foreach (var row in dmc.GetTable<Gem>().Rows)
+                {
+                    row.CanGemMix = 0; // Cant Gem Mix
+                    row.CanSell = 0; // Cant Sell
+                }
+            }
         }
 
         // Apply changes to the game's data.i.

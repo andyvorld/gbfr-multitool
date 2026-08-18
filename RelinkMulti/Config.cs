@@ -98,8 +98,8 @@ public class TradeConfig
     [DefaultValue(false)]
     public bool DaliaIsRafaleCoin { get; set; } = false;
 
-    [DisplayName("Remove quest pre-req on shop")]
-    [Description("This is not balanced at all, some debug shop entries get revealed with this option")]
+    [DisplayName("⚖️ Remove quest pre-req on shop")]
+    [Description("[Unbalanced] This is not balanced at all, some debug shop entries get revealed with this option")]
     [DefaultValue(false)]
     public bool NoQuestPrereq { get; set; } = false;
 
@@ -128,6 +128,15 @@ public class EnemyConfig
     public double MspMult { get; set; } = 1;
 }
 
+[DisplayName("Sigil")]
+public class GemConfig
+{
+    [DisplayName("⚖️ All all sigils in Synth")]
+    [Description("[Unbalanced] Allow all sigils to be used in synthesis. Illegal sigils can be created.")]
+    [DefaultValue(false)]
+    public bool AllowAllSigilSynth { get; set; } = false;
+}
+
 public class Config : Configurable<Config>
 {
     /*
@@ -150,7 +159,7 @@ public class Config : Configurable<Config>
         The `DefaultValue` attribute is used as part of the `Reset` button in Reloaded-Launcher.
     */
 
-    [DisplayName("Enable experimental settings")]
+    [DisplayName("⚠️ Enable experimental settings")]
     [Description("Enable experimental settings")]
     [DefaultValue(false)]
     [Display(Order = 0)]
@@ -163,6 +172,8 @@ public class Config : Configurable<Config>
     public TradeConfig TradeConfig { get; set; } = new();
 
     public EnemyConfig EnemyConfig { get; set; } = new();
+
+    public GemConfig GemConfig { get; set; } = new();
 }
 
 /// <summary>
