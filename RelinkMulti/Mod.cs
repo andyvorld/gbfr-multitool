@@ -72,9 +72,11 @@ public class Mod : ModBase // <= Do not Remove.
         var ret = _modLoader.GetController<IDataManager>()!.TryGetTarget(out dm!);
         if (ret != false)
         {
-            dm.UpdateTable<Constant>(constantTable =>
+            using var dmc = new DataManagerContext(dm);
+
+            if (_configuration.ConstantTableConfig.Enabled)
             {
-                foreach (var row in constantTable.Rows)
+                foreach (var row in dmc.GetTable<Constant>().Rows)
                 {
                     row.MaxLevelVoucherReward = _configuration.ConstantTableConfig.MaxLevelVoucherReward;
                     row.MaxLevelMSPReward = _configuration.ConstantTableConfig.MaxLevelMspReward;
@@ -82,11 +84,11 @@ public class Mod : ModBase // <= Do not Remove.
                     // row.MaxTransmarvelStock = _configuration.ConstantTableConfig.MaxTransmarvelStock;
                     row.Unk21 = _configuration.ConstantTableConfig.MaxLevelTransmarvelReward;
                 }
-            }, _configuration.ConstantTableConfig.Enabled);
+            }
 
-            dm.UpdateTable<RewardLot>(rewardLotTable =>
+            if (_configuration.RewardLotTableConfig.Enabled)
             {
-                foreach (var row in rewardLotTable.Rows)
+                foreach (var row in dmc.GetTable<RewardLot>().Rows)
                 {
                     if (row is { ItemId: not UtilityExtensions.EMPTY_HASH })
                     {
@@ -98,20 +100,20 @@ public class Mod : ModBase // <= Do not Remove.
                         row.GemCount = (int)(row.GemCount * _configuration.RewardLotTableConfig.SigilDropMult);
                     }
                 }
-            }, _configuration.RewardLotTableConfig.Enabled);
+            }
 
-            dm.UpdateTable<RewardSummon>(rs =>
+            if (_configuration.RewardLotTableConfig.Enabled && _configuration.EnableExperimental)
             {
-                foreach (var row in rs.Rows)
+                foreach (var row in dmc.GetTable<RewardSummon>().Rows)
                 {
                     row.Unk4 = (int)(row.Unk4 * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Min reward count
                     row.Unk5 = (int)(row.Unk5 * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Max reward count
                 }
-            }, _configuration.RewardLotTableConfig.Enabled && _configuration.EnableExperimental);
+            }
 
-            dm.UpdateTable<Trade>(tradeTable =>
+            if (_configuration.TradeConfig.Enabled)
             {
-                foreach (var row in tradeTable.Rows)
+                foreach (var row in dmc.GetTable<Trade>().Rows)
                 {
                     if (_configuration.TradeConfig.UnlimitedStock)
                     {
@@ -138,11 +140,11 @@ public class Mod : ModBase // <= Do not Remove.
                         row.IsRandomFeatured = 0;
                     }
                 }
-            }, _configuration.TradeConfig.Enabled);
+            }
 
-            dm.UpdateTable<ItemMaterialList>(mtl =>
+            if (_configuration.TradeConfig.Enabled)
             {
-                foreach (var row in mtl.Rows)
+                foreach (var row in dmc.GetTable<ItemMaterialList>().Rows)
                 {
                     // Azurite shared to splendor key
                     if (row.Key == 900000)
@@ -155,16 +157,16 @@ public class Mod : ModBase // <= Do not Remove.
                         row.Item1 = KnownHashes.RafaleCoin;
                     }
                 }
-            }, _configuration.TradeConfig.Enabled);
+            }
 
-            dm.UpdateTable<EnemyExp>(ee =>
+            if (_configuration.EnemyConfig.Enabled)
             {
-                foreach (var row in ee.Rows)
+                foreach (var row in dmc.GetTable<EnemyExp>().Rows)
                 {
                     row.ExpOnKill = (uint)(row.ExpOnKill * _configuration.EnemyConfig.ExpMult);
                     row.Unk6 = (uint)(row.Unk6 * _configuration.EnemyConfig.MspMult); // MSP on Kill
                 }
-            }, _configuration.EnemyConfig.Enabled);
+            }
         }
 
         // Apply changes to the game's data.i.
