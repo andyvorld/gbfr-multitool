@@ -139,6 +139,11 @@ public class Mod : ModBase // <= Do not Remove.
                         row.FeaturedWeight = 0;
                         row.IsRandomFeatured = 0;
                     }
+
+                    if (_configuration.TradeConfig.SellVoucherForRafaleCoin > 0)
+                    {
+                        dmc.AddShopItem(KnownHashes.RafaleCoin, KnownHashes.KnickknackVoucher, _configuration.TradeConfig.SellVoucherForRafaleCoin);
+                    }
                 }
             }
 

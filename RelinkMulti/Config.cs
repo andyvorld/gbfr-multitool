@@ -107,6 +107,11 @@ public class TradeConfig
     [Description("Reveals all rotating shop options permanently")]
     [DefaultValue(false)]
     public bool NoShopRotation { get; set; } = false;
+
+    [DisplayName("Sell voucher for Rafale Coin")]
+    [Description("Sell X vouchers for 1 rafale Coin, 0 = disabled")]
+    [DefaultValue(0)]
+    public int SellVoucherForRafaleCoin { get; set; } = 0;
 }
 
 [DisplayName("Enemy")]
