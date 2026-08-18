@@ -75,7 +75,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GBFRDataTools\GBFRDataTools.Hashing\GBFRDataTools.Hashing.csproj" />
+    <ProjectReference Include="..\GBFRDataTools\GBFRDataTools.Hashing\GBFRDataTools.Hashing.csproj">
+      <AdditionalProperties>GeneratePackageOnBuild=False</AdditionalProperties>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>
