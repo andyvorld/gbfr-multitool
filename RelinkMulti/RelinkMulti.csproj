@@ -10,7 +10,7 @@
     <OutputPath>$(RELOADEDIIMODS)/gbfrelink.multitool</OutputPath>
     <ImplicitUsings>enable</ImplicitUsings>
     <ReportAnalyzerOnlyFromSource>true</ReportAnalyzerOnlyFromSource>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
 
     <!-- IL Trimming Support for Framework Dependent Apps. Unofficial.
          If you set this to true, trimming will be enabled when you publish the mod.
@@ -30,6 +30,15 @@
     </PropertyGroup>
 
     <ZipDirectory SourceDirectory="$(PublishDir)" DestinationFile="$(ZipOutputFile)" Overwrite="true" />
+  </Target>
+
+  <Target Name="BuildTimeModConfig" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <JsonFileTemplate>ModConfig.template.json</JsonFileTemplate>
+      <JsonFile>ModConfig.json</JsonFile>
+    </PropertyGroup>
+
+    <WriteLinesToFile File="$(JsonFile)" Lines="$([System.IO.File]::ReadAllText($(JsonFileTemplate)).Replace('##VERSION##', '$(Version)'))" Overwrite="true" />
   </Target>
 
   <Import Project="Reloaded.Trimming.targets" />
