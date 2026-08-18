@@ -90,12 +90,12 @@ public class Mod : ModBase // <= Do not Remove.
             {
                 foreach (var row in dmc.GetTable<RewardLot>().Rows)
                 {
-                    if (row is { ItemId: not UtilityExtensions.EMPTY_HASH })
+                    if (row is { ItemId: not KnownHashes.EMPTY_HASH })
                     {
                         row.AmountGiven = (int)(row.AmountGiven * _configuration.RewardLotTableConfig.ItemDropMult);
                     }
 
-                    if (row is { GemId: not UtilityExtensions.EMPTY_HASH })
+                    if (row is { GemId: not KnownHashes.EMPTY_HASH })
                     {
                         row.GemCount = (int)(row.GemCount * _configuration.RewardLotTableConfig.SigilDropMult);
                     }
@@ -106,8 +106,8 @@ public class Mod : ModBase // <= Do not Remove.
             {
                 foreach (var row in dmc.GetTable<RewardSummon>().Rows)
                 {
-                    row.Unk4 = (int)(row.Unk4 * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Min reward count
-                    row.Unk5 = (int)(row.Unk5 * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Max reward count
+                    row.MaybeMinAmountGiven = (int)(row.MaybeMinAmountGiven * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Min reward count
+                    row.MaybeMaxAmountGiven = (int)(row.MaybeMaxAmountGiven * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Max reward count
                 }
             }
 
@@ -164,7 +164,7 @@ public class Mod : ModBase // <= Do not Remove.
                 foreach (var row in dmc.GetTable<EnemyExp>().Rows)
                 {
                     row.ExpOnKill = (uint)(row.ExpOnKill * _configuration.EnemyConfig.ExpMult);
-                    row.Unk6 = (uint)(row.Unk6 * _configuration.EnemyConfig.MspMult); // MSP on Kill
+                    row.MspOnKill = (uint)(row.MspOnKill * _configuration.EnemyConfig.MspMult);
                 }
             }
 
@@ -172,8 +172,8 @@ public class Mod : ModBase // <= Do not Remove.
             {
                 foreach (var row in dmc.GetTable<Gem>().Rows)
                 {
-                    row.CanGemMix = 0; // Cant Gem Mix
-                    row.CanSell = 0; // Cant Sell
+                    row.CantGemMix = 0;
+                    row.CantSell = 0;
                 }
             }
         }

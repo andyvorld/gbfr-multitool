@@ -6,8 +6,6 @@ namespace RelinkMulti;
 
 public static class UtilityExtensions
 {
-    public const string EMPTY_HASH = "887AE0B0";
-
     extension(string str)
     {
         public string ToSnakeCase()
