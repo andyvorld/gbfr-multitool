@@ -139,11 +139,11 @@ public class Mod : ModBase // <= Do not Remove.
                         row.FeaturedWeight = 0;
                         row.IsRandomFeatured = 0;
                     }
+                }
 
-                    if (_configuration.TradeConfig.SellVoucherForRafaleCoin > 0)
-                    {
-                        dmc.AddShopItem(KnownHashes.RafaleCoin, KnownHashes.KnickknackVoucher, _configuration.TradeConfig.SellVoucherForRafaleCoin);
-                    }
+                if (_configuration.TradeConfig.SellVoucherForRafaleCoin > 0)
+                {
+                    dmc.AddShopItem(KnownHashes.RafaleCoin, KnownHashes.KnickknackVoucher, _configuration.TradeConfig.SellVoucherForRafaleCoin);
                 }
             }
 
@@ -179,6 +179,21 @@ public class Mod : ModBase // <= Do not Remove.
                 {
                     row.CantGemMix = 0;
                     row.CantSell = 0;
+                }
+            }
+
+            if (_configuration.WeaponCraftingConfig.TerminusCost != default)
+            {
+                if (dmc.GetTable<ItemMaterialList>().Rows.FirstOrDefault(x => x.Key == 3950) is ItemMaterialListTableRow row)
+                {
+                    if (_configuration.WeaponCraftingConfig.TerminusCost == WeaponCraftingConfig.TerminusCostEnum.OneMemory)
+                    {
+                        row.ItemCount1 = 1;
+                    }
+                    else if (_configuration.WeaponCraftingConfig.TerminusCost == WeaponCraftingConfig.TerminusCostEnum.Vouchers)
+                    {
+                        row.Item1 = KnownHashes.KnickknackVoucher;
+                    }
                 }
             }
         }

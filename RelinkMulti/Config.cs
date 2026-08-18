@@ -142,15 +142,33 @@ public class GemConfig
     public bool AllowAllSigilSynth { get; set; } = false;
 }
 
+[DisplayName("Weapon Crafting")]
+public class WeaponCraftingConfig
+{
+    public enum TerminusCostEnum
+    {
+        Default,
+        [Display(Name = "One Ultimate Memory")]
+        OneMemory,
+        [Display(Name = "Knickknack Vouchers")]
+        Vouchers
+    }
+
+    [DisplayName("Terminus craft cost")]
+    [Description("Change terminus weapon craft cost")]
+    [DefaultValue(TerminusCostEnum.Default)]
+    public TerminusCostEnum TerminusCost { get; set; } = default;
+}
+
 public class Config : Configurable<Config>
 {
     /*
         User Properties:
             - Please put all of your configurable properties here.
-    
+
         By default, configuration saves as "Config.json" in mod user config folder.    
         Need more config files/classes? See Configuration.cs
-    
+
         Available Attributes:
         - Category
         - DisplayName
@@ -179,6 +197,8 @@ public class Config : Configurable<Config>
     public EnemyConfig EnemyConfig { get; set; } = new();
 
     public GemConfig GemConfig { get; set; } = new();
+
+    public WeaponCraftingConfig WeaponCraftingConfig { get; set; } = new();
 }
 
 /// <summary>
