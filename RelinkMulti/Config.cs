@@ -54,19 +54,21 @@ public class RewardLotTableConfig
     [DisplayName("Item drop multiplier")]
     [Description("Item drop multiplier")]
     [DefaultValue(1)]
-    [Display(Order = 1)]
     public double ItemDropMult { get; set; } = 1;
 
     [DisplayName("Sigil drop multiplier")]
     [Description("Sigil drop multiplier")]
     [DefaultValue(1)]
-    [Display(Order = 2)]
     public double SigilDropMult { get; set; } = 1;
+
+    [DisplayName("Wrightstone drop multiplier")]
+    [Description("Wrightstone drop multiplier")]
+    [DefaultValue(1)]
+    public double WrightstoneDropMult { get; set; } = 1;
 
     [DisplayName("⚠️ Summon drop multiplier")]
     [Description("[Experimental] Summon drop multiplier")]
     [DefaultValue(1)]
-    [Display(Order = 3)]
     public double SummonDropMult { get; set; } = 1;
 }
 
@@ -131,6 +133,11 @@ public class EnemyConfig
     [Description("Change the MSP on kill by a multiplier")]
     [DefaultValue(1)]
     public double MspMult { get; set; } = 1;
+
+    [DisplayName("Rupies Multiplier")]
+    [Description("Change the rupies on kill by a multiplier")]
+    [DefaultValue(1)]
+    public double RupiesMult { get; set; } = 1;
 }
 
 [DisplayName("Sigil")]

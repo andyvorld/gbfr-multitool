@@ -88,11 +88,21 @@ public class Mod : ModBase // <= Do not Remove.
 
             if (_configuration.RewardLotTableConfig.Enabled)
             {
-                foreach (var row in dmc.GetTable<RewardLot>().Rows)
+                var rewardLotTable = dmc.GetTable<RewardLot>();
+                var itemCategory = dmc.GetTable<Item>().Rows
+                    .ToDictionary(x => x.Key, x => x.ItemCategoryId);
+
+                foreach (var row in rewardLotTable.Rows)
                 {
                     if (row is { ItemId: not KnownHashes.EMPTY_HASH })
                     {
-                        row.AmountGiven = (int)(row.AmountGiven * _configuration.RewardLotTableConfig.ItemDropMult);
+                        var mult = itemCategory.GetValueOrDefault(row.ItemId) switch
+                        {
+                            6 => _configuration.RewardLotTableConfig.WrightstoneDropMult,
+                            _ => _configuration.RewardLotTableConfig.ItemDropMult
+                        };
+
+                        row.AmountGiven = (int)(row.AmountGiven * mult);
                     }
 
                     if (row is { GemId: not KnownHashes.EMPTY_HASH })
@@ -168,6 +178,8 @@ public class Mod : ModBase // <= Do not Remove.
             {
                 foreach (var row in dmc.GetTable<EnemyExp>().Rows)
                 {
+                    row.Unk1 = (uint)(row.Unk1 * _configuration.EnemyConfig.RupiesMult);
+                    row.Unk2 = (uint)(row.Unk2 * _configuration.EnemyConfig.RupiesMult);
                     row.ExpOnKill = (uint)(row.ExpOnKill * _configuration.EnemyConfig.ExpMult);
                     row.MspOnKill = (uint)(row.MspOnKill * _configuration.EnemyConfig.MspMult);
                 }
