@@ -43,10 +43,10 @@ public class ConstantTableConfig
     public int MaxLevelTransmarvelReward { get; set; } = 1;
 }
 
-[DisplayName("Reward Lot")]
+[DisplayName("Quest Rewards")]
 public class RewardLotTableConfig
 {
-    [Description("Enable reward lot table mods")]
+    [Description("Enable quest reward mods")]
     [DefaultValue(false)]
     [Display(Order = 0)]
     public bool Enabled { get; set; } = false;
@@ -54,22 +54,44 @@ public class RewardLotTableConfig
     [DisplayName("Item drop multiplier")]
     [Description("Item drop multiplier")]
     [DefaultValue(1)]
+    [Display(Order = 1)]
     public double ItemDropMult { get; set; } = 1;
 
     [DisplayName("Sigil drop multiplier")]
     [Description("Sigil drop multiplier")]
     [DefaultValue(1)]
+    [Display(Order = 2)]
     public double SigilDropMult { get; set; } = 1;
 
     [DisplayName("Wrightstone drop multiplier")]
     [Description("Wrightstone drop multiplier")]
     [DefaultValue(1)]
+    [Display(Order = 3)]
     public double WrightstoneDropMult { get; set; } = 1;
 
     [DisplayName("⚠️ Summon drop multiplier")]
     [Description("[Experimental] Summon drop multiplier")]
     [DefaultValue(1)]
+    [Display(Order = 4)]
     public double SummonDropMult { get; set; } = 1;
+
+    [DisplayName("EXP multiplier")]
+    [Description("EXP on completion multiplier")]
+    [DefaultValue(1)]
+    [Display(Order = 5)]
+    public double ExpMult { get; set; } = 1;
+
+    [DisplayName("Rupies multiplier")]
+    [Description("Rupies on completion multiplier")]
+    [DefaultValue(1)]
+    [Display(Order = 6)]
+    public double GoldMult { get; set; } = 1;
+
+    [DisplayName("MSP multiplier")]
+    [Description("MSP on completion multiplier")]
+    [DefaultValue(1)]
+    [Display(Order = 7)]
+    public double MspMult { get; set; } = 1;
 }
 
 [DisplayName("Knickknack Shack")]

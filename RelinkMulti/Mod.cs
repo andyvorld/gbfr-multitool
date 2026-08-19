@@ -110,15 +110,34 @@ public class Mod : ModBase // <= Do not Remove.
                         row.GemCount = (int)(row.GemCount * _configuration.RewardLotTableConfig.SigilDropMult);
                     }
                 }
-            }
 
-            if (_configuration.RewardLotTableConfig.Enabled && _configuration.EnableExperimental)
-            {
-                foreach (var row in dmc.GetTable<RewardSummon>().Rows)
+                if (_configuration.EnableExperimental)
                 {
-                    row.MaybeMinAmountGiven = (int)(row.MaybeMinAmountGiven * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Min reward count
-                    row.MaybeMaxAmountGiven = (int)(row.MaybeMaxAmountGiven * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Max reward count
+                    foreach (var row in dmc.GetTable<RewardSummon>().Rows)
+                    {
+                        row.MaybeMinAmountGiven = (int)(row.MaybeMinAmountGiven * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Min reward count
+                        row.MaybeMaxAmountGiven = (int)(row.MaybeMaxAmountGiven * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Max reward count
+                    }
                 }
+
+                var rewardTable = dmc.GetTable<Reward>();
+                var rewardPointTable = dmc.GetTable<RewardPoint>();
+                void ApplyMult(Func<RewardTableRow, string> keyFunc, double mult)
+                {
+                    var rows = from rewardRow in rewardTable.Rows
+                               join rewardPointRow in rewardPointTable.Rows on keyFunc.Invoke(rewardRow) equals rewardPointRow.Key
+                               select rewardPointRow;
+
+                    foreach (var row in rows)
+                    {
+                        row.Min = (int)(row.Min * mult);
+                        row.Max = (int)(row.Max * mult);
+                    }
+                }
+
+                ApplyMult(row => row.RewardPointIdExp, _configuration.RewardLotTableConfig.ExpMult);
+                ApplyMult(row => row.RewardPointIdGold, _configuration.RewardLotTableConfig.GoldMult);
+                ApplyMult(row => row.RewardPointIdMSP, _configuration.RewardLotTableConfig.MspMult);
             }
 
             if (_configuration.TradeConfig.Enabled)
