@@ -3,7 +3,7 @@
     "ModName": "Relink Multitool",
     "ModAuthor": "andyvorld",
     "ModVersion": "##VERSION##",
-    "ModDescription": "Collection of .tbl mods for GBFR",
+    "ModDescription": "Collection of customizable mods. EXP/MSP multipliers, item drop multipliers, shop modifications.",
     "ModDll": "RelinkMulti.dll",
     "ModIcon": "Preview.png",
     "ModR2RManagedDll32": "x86/RelinkMulti.dll",
