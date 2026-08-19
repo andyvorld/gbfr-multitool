@@ -218,10 +218,7 @@ public class Mod : ModBase // <= Do not Remove.
     #region Standard Overrides
     public override void ConfigurationUpdated(Config configuration)
     {
-        // Apply settings from configuration.
-        // ... your code here.
-        _configuration = configuration;
-        _logger.WriteLine($"[{_modConfig.ModId}] Config Updated: Applying");
+        _logger.WriteLine($"[{_modConfig.ModId}] Hot reloading of configuration updates is not supported, restart the game");
     }
     #endregion
 
