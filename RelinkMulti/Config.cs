@@ -159,7 +159,7 @@ public class EnemyConfig
     [DisplayName("Rupies Multiplier")]
     [Description("Change the rupies on kill by a multiplier")]
     [DefaultValue(1)]
-    public double RupiesMult { get; set; } = 1;
+    public double GoldMult { get; set; } = 1;
 }
 
 [DisplayName("Sigil")]

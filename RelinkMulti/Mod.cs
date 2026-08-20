@@ -82,7 +82,7 @@ public class Mod : ModBase // <= Do not Remove.
                     row.MaxLevelMSPReward = _configuration.ConstantTableConfig.MaxLevelMspReward;
                     row.MaxLevelRepeatXP = _configuration.ConstantTableConfig.MaxLevelRepeatXP;
                     // row.MaxTransmarvelStock = _configuration.ConstantTableConfig.MaxTransmarvelStock;
-                    row.Unk21 = _configuration.ConstantTableConfig.MaxLevelTransmarvelReward;
+                    row.MaxLevelTransmarvelReward = _configuration.ConstantTableConfig.MaxLevelTransmarvelReward;
                 }
             }
 
@@ -115,8 +115,8 @@ public class Mod : ModBase // <= Do not Remove.
                 {
                     foreach (var row in dmc.GetTable<RewardSummon>().Rows)
                     {
-                        row.MaybeMinAmountGiven = (int)(row.MaybeMinAmountGiven * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Min reward count
-                        row.MaybeMaxAmountGiven = (int)(row.MaybeMaxAmountGiven * _configuration.RewardLotTableConfig.SummonDropMult); // Maybe - Max reward count
+                        row.MinAmountGiven = (int)(row.MinAmountGiven * _configuration.RewardLotTableConfig.SummonDropMult);
+                        row.MaxAmountGiven = (int)(row.MaxAmountGiven * _configuration.RewardLotTableConfig.SummonDropMult);
                     }
                 }
 
@@ -197,8 +197,8 @@ public class Mod : ModBase // <= Do not Remove.
             {
                 foreach (var row in dmc.GetTable<EnemyExp>().Rows)
                 {
-                    row.Unk1 = (uint)(row.Unk1 * _configuration.EnemyConfig.RupiesMult);
-                    row.Unk2 = (uint)(row.Unk2 * _configuration.EnemyConfig.RupiesMult);
+                    row.MinGoldOnKill = (uint)(row.MinGoldOnKill * _configuration.EnemyConfig.GoldMult);
+                    row.MaxGoldOnKill = (uint)(row.MaxGoldOnKill * _configuration.EnemyConfig.GoldMult);
                     row.ExpOnKill = (uint)(row.ExpOnKill * _configuration.EnemyConfig.ExpMult);
                     row.MspOnKill = (uint)(row.MspOnKill * _configuration.EnemyConfig.MspMult);
                 }
