@@ -44,6 +44,10 @@ public sealed class DataManagerContext(IDataManager dm) : IDisposable
 
 public static class DMCExtensions
 {
+    private static uint _seedId = 0xCAFEBEEF;
+
+    private static uint NextSeedId() => _seedId++;
+
     extension(DataManagerContext dmc)
     {
         public void AddShopItem(string purchaseItem, string costItem, int costQty)
@@ -58,9 +62,9 @@ public static class DMCExtensions
                         where tradeRow.SubKey == "BEF90A06" // Hidden 'Silver Centrum' entry, use as template
                         select (tradeRow, itmRow, imlRow)).First();
 
-            string subKey = "CAFEBEEF";
-            string itmKey = "CAFEBEEF";
-            uint imlKey = 0xCAFEBEEF;
+            uint imlKey = NextSeedId();
+            string subKey = imlKey.ToString("X8");
+            string itmKey = imlKey.ToString("X8");
 
             var newTradeRow = rows.tradeRow with
             {
@@ -78,6 +82,79 @@ public static class DMCExtensions
             {
                 MaterialId1 = imlKey,
                 Key = itmKey,
+            };
+
+            var newImlRow = rows.imlRow with
+            {
+                Key = imlKey,
+
+                Item1 = costItem,
+                Item2 = KnownHashes.EMPTY_HASH,
+                Item3 = KnownHashes.EMPTY_HASH,
+                Item4 = KnownHashes.EMPTY_HASH,
+                Item5 = KnownHashes.EMPTY_HASH,
+                Item6 = KnownHashes.EMPTY_HASH,
+                Item7 = KnownHashes.EMPTY_HASH,
+                Item8 = KnownHashes.EMPTY_HASH,
+                Item10 = KnownHashes.EMPTY_HASH,
+                Item11 = KnownHashes.EMPTY_HASH,
+                Item12 = KnownHashes.EMPTY_HASH,
+
+                ItemCount1 = costQty,
+                ItemCount2 = 0,
+                ItemCount3 = 0,
+                ItemCount4 = 0,
+                ItemCount5 = 0,
+                ItemCount6 = 0,
+                ItemCount7 = 0,
+                ItemCount8 = 0,
+                ItemCount10 = 0,
+                ItemCount11 = 0,
+                ItemCount12 = 0,
+            };
+
+            tradeTable.Rows.Add(newTradeRow);
+            itmTable.Rows.Add(newItmRow);
+            imlTable.Rows.Add(newImlRow);
+        }
+
+        public void AddShopSigil(string purchaseItem, string costItem, int costQty, uint sortOrder = 5000)
+        {
+            var tradeTable = dmc.GetTable<Trade>();
+            var itmTable = dmc.GetTable<ItemTierMap>();
+            var imlTable = dmc.GetTable<ItemMaterialList>();
+
+            var rows = (from tradeRow in tradeTable.Rows
+                        join itmRow in itmTable.Rows on tradeRow.ItemTierMapId equals itmRow.Key
+                        join imlRow in imlTable.Rows on itmRow.MaterialId1 equals imlRow.Key
+                        where tradeRow.SubKey == "F4391606"
+                        select (tradeRow, itmRow, imlRow)).First();
+
+            uint imlKey = NextSeedId();
+            string subKey = imlKey.ToString("X8");
+            string itmKey = imlKey.ToString("X8");
+
+            var newTradeRow = rows.tradeRow with
+            {
+                MinQuestId = "00000000",
+                MaxQuestId = "00000000",
+                GemPurchasable = purchaseItem,
+
+                Key = 1,
+                SubKey = subKey,
+                SortOrder = sortOrder,
+
+                MaxStock = -1,
+                MaxStockForRefresh = 0,
+                IsRefreshable = 0,
+
+                ItemTierMapId = itmKey,
+            };
+
+            var newItmRow = rows.itmRow with
+            {
+                Key = itmKey,
+                MaterialId1 = imlKey,
             };
 
             var newImlRow = rows.imlRow with

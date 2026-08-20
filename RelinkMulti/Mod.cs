@@ -4,6 +4,9 @@ using RelinkMulti.Template;
 using RelinkMulti.Configuration;
 using gbfrelink.utility.manager.Interfaces;
 using GBFRDataTools.Database.Generated;
+using GBFRDataTools.Hashing;
+
+
 
 #if DEBUG
 using System.Diagnostics;
@@ -174,7 +177,30 @@ public class Mod : ModBase // <= Do not Remove.
                 {
                     dmc.AddShopItem(KnownHashes.RafaleCoin, KnownHashes.KnickknackVoucher, _configuration.TradeConfig.SellVoucherForRafaleCoin);
                 }
+
+                if (_configuration.TradeConfig.AddSpecialSigils)
+                {
+                    uint ii = 5000;
+
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_156_04"), KnownHashes.KnickknackVoucher, 10, ii++); // Potent-Greens
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_151_94"), KnownHashes.KnickknackVoucher, 10, ii++); // Potent-Greens+
+
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_140_00"), KnownHashes.KnickknackVoucher, 10, ii++); // Crabby Resonance
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_141_04"), KnownHashes.KnickknackVoucher, 10, ii++); // Crabvestment Returns
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_300_11"), KnownHashes.KnickknackVoucher, 10, ii++); // Crabs Are Forever+
+
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_301_00"), KnownHashes.KnickknackVoucher, 10, ii++); // Immortal Shell 
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_301_10"), KnownHashes.KnickknackVoucher, 10, ii++); // Immortal Shell+
+
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_302_00"), KnownHashes.KnickknackVoucher, 10, ii++); // In a Pinch
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_302_10"), KnownHashes.KnickknackVoucher, 10, ii++); // In a Pinch+
+
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_303_00"), KnownHashes.KnickknackVoucher, 10, ii++); // Sumo Force
+
+                    dmc.AddShopSigil(XXHash32Custom.HashAsString("GEEN_142_02"), KnownHashes.KnickknackVoucher, 10, ii++); // Seven Net
+                }
             }
+
 
             if (_configuration.TradeConfig.Enabled)
             {

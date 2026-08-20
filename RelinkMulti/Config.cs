@@ -136,6 +136,11 @@ public class TradeConfig
     [Description("Sell X vouchers for 1 rafale Coin, 0 = disabled")]
     [DefaultValue(0)]
     public int SellVoucherForRafaleCoin { get; set; } = 0;
+
+    [DisplayName("⚖️ Add special sigils to treasure trade")]
+    [Description("[Unbalanced] Add special sigils to treasure trade, crab related sigils will change in level once purchased")]
+    [DefaultValue(false)]
+    public bool AddSpecialSigils { get; set; } = false;
 }
 
 [DisplayName("Enemy")]
